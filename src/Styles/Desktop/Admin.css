@@ -7,7 +7,6 @@
 
 .admin-content {
   flex-grow: 1;
-  width: 80%;
-  margin-top: 5%; /* Add padding if necessary */
-  margin-left: 5%;
+  margin: 5% 15%;
+  margin-right: 5%;
 }

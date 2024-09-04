@@ -4,6 +4,7 @@ import { CategoriesProvider } from "Contexts/CategoriesContext";
 import { Authenticated } from "Utilities/Authentication";
 import Admin from "Pages/Admin";
 import Products from "Components/Admin/Products";
+import Staff from "Components/Admin/Staff";
 
 function RoutesWithContexts() {
   return (
@@ -12,6 +13,7 @@ function RoutesWithContexts() {
       <Routes>
         <Route path="/admin/*" element={<Admin />}>
           <Route path="products" element={<Products />} />
+          <Route path="staff" element={<Staff />} />
         </Route>
       </Routes>
     </CategoriesProvider>
