@@ -1,55 +1,94 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef } from "react";
 import "Styles/Desktop/Staff.css";
-import { useState } from 'react';
-import { Table } from 'Components/Table';
+import { useState } from "react";
+import { Table } from "Components/Table";
+import AddStaff from "Utilities/postStaff";
+import fetchStaff from "Utilities/fetchStaff";
 
 export default function Staff() {
-    const [rows, setRows] = useState([
-        {
-            fname: 'Super Coordinator',
-            email: 'Super@gastro-pos.com',
-            pass: 'SuperPassword',
-            status: 'Admin'
-        },
-        {
-            fname: 'Grex',
-            email: 'Grex@gastro-pos.com',
-            pass: 'TheOssaLkbire',
-            status: 'Admin'
-        },
-        {
-            fname: 'flen',
-            email: 'flen@gastro-pos.com',
-            pass:'IamNothing',
-            status: 'Staff'
-        }
-    ])
-    const [rowToEdit, setRowToEdit] = useState(null);
-    const handleDelete = ()=>{
+  const [data, setData] = useState({
+    Name: "",
+    email: "",
+    password: "",
+    admin: false,
+  });
 
+  const [rows, setRows] = useState([]);
+  const rowsKeys = rows.length > 0 ? Object.keys(rows[0]) : [];
+  const Tableconfig = ["Name", "Email", "Status", "Edit"];
+
+  const stopRender = useRef(true);
+
+  const fetchStaffList = useCallback(
+    async (e) => {
+      e.preventDefault();
+      const config = ["Name", "Email", "Status"];
+      await fetchStaff(setRows, config);
+    },
+    [setRows]
+  );
+
+  useEffect(() => {
+    if (stopRender.current === true) {
+      fetchStaffList();
+      stopRender.current = false;
     }
-    const handleEdit = (index) => {
-        setRowToEdit(rows.at(index));
+  }, [fetchStaffList]);
 
-        prompt(`Current Password: ${rowToEdit.pass}. New Password:`);
-    }
+  const [rowToEdit, setRowToEdit] = useState(null);
+  const handleDelete = () => {};
+  const handleEdit = (index) => {
+    setRowToEdit(data.at(index));
 
-    return (
-        <React.Fragment>
-            <div className='staff-container'>
-                <div className="form-box">
-                    <form className="form">
-                        <span className="title">Welcome to Staff</span>
-                        <div className="form-container">
-                            <input type="text" className="input" placeholder="Full Name" />
-                            <input type="email" className="input" placeholder="Email" />
-                            <input type="password" className="input" placeholder="Password" />
-                        </div>
-                        <button>Add Staff</button>
-                    </form>
-                </div>
-                <Table rows={rows} deleteRow={handleDelete} editRow={handleEdit}/>
+    prompt(`Current Password: ${rowToEdit.pass}. New Password:`);
+  };
+
+  const handleDataChange = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleAddStaff = async (e) => {
+    e.preventDefault(e);
+    await AddStaff(data);
+  };
+
+  return (
+    <React.Fragment>
+      <div className="staff-container">
+        <div className="form-box">
+          <form className="form" onSubmit={handleAddStaff}>
+            <span className="title">Welcome to Staff</span>
+            <div className="form-container">
+              <input
+                name="Name"
+                type="text"
+                className="input"
+                placeholder="Full Name"
+                onChange={handleDataChange}
+              />
+              <input
+                name="email"
+                type="email"
+                className="input"
+                placeholder="Email"
+                onChange={handleDataChange}
+              />
+              <input
+                name="password"
+                type="password"
+                className="input"
+                placeholder="Password"
+                onChange={handleDataChange}
+              />
             </div>
-        </React.Fragment>
-    )
+            <button type="submit">Add Staff</button>
+          </form>
+        </div>
+        <Table rows={rows} deleteRow={handleDelete} editRow={handleEdit} />
+      </div>
+    </React.Fragment>
+  );
 }

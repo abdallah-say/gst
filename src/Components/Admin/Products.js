@@ -1,8 +1,14 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import "Styles/Desktop/Products.css";
 import { CategoriesContext } from "Contexts/CategoriesContext";
 import handlePostProduct from "Utilities/postProducts";
-// import fetchProducts from "Utilities/fetchProducts";
+import fetchProducts from "Utilities/fetchProducts";
 
 function Products() {
   const { categories } = useContext(CategoriesContext);
@@ -17,23 +23,31 @@ function Products() {
 
   const formRef = useRef(null);
 
-  // const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
 
-  //   const productKeys = products.length > 0 ? Object.keys(products[0]) : [];
+  const productKeys = products.length > 0 ? Object.keys(products[0]) : [];
+  const Tableconfig = [
+    "Title",
+    "Description",
+    "Category",
+    "Price",
+    "Image",
+    "Edit",
+  ];
 
-  // const stopRender = useRef(true);
+  const stopRender = useRef(true);
 
-  // async function fetchProductsList() {
-  //   const config = ["Title", "Description", "Category", "Price", "Image"];
-  //   await fetchProducts(setProducts, config);
-  // }
+  const fetchProductsList = useCallback(async () => {
+    const config = ["Title", "Description", "Category", "Price", "Image"];
+    await fetchProducts(setProducts, config);
+  }, [setProducts]);
 
-  //   useEffect(() => {
-  //     if (stopRender.current === true) {
-  //       fetchProductsList();
-  //       stopRender.current = false;
-  //     }
-  //   }, []);
+  useEffect(() => {
+    if (stopRender.current === true) {
+      fetchProductsList();
+      stopRender.current = false;
+    }
+  }, [fetchProductsList]);
 
   const handleChanges = (e) => {
     e.preventDefault();
@@ -52,7 +66,7 @@ function Products() {
   const addProduct = async (e) => {
     e.preventDefault();
     await handlePostProduct(item);
-    // await fetchProductsList();
+    await fetchProductsList();
     setItem({
       Title: "",
       Description: "",
@@ -100,7 +114,7 @@ function Products() {
             <input name="Image" type="file" required onChange={handleChanges} />
             <button type="submit">Add Product</button>
           </form>
-          {/* <div className="table-Container">
+          <div className="table-Container">
             <table className="products-Table">
               <thead>
                 <tr>
@@ -130,7 +144,7 @@ function Products() {
                 ))}
               </tbody>
             </table>
-          </div> */}
+          </div>
         </div>
       </div>
     </React.Fragment>
