@@ -50,6 +50,8 @@ export default function Staff() {
 
   const handleAddStaff = async (e) => {
     e.preventDefault(e);
+    console.log(data);
+
     await AddStaff(data);
   };
 
@@ -74,10 +76,10 @@ export default function Staff() {
                 placeholder="Password"
                 onChange={handleDataChange}
               />
-              <input type="radio" />
-              Admin
-              <input type="radio" />
+              <input type="radio" name="admin" value="staff" />
               Staff
+              <input type="radio" name="admin" value="admin" />
+              Admin
             </div>
             <button type="submit">Add Staff</button>
           </form>
