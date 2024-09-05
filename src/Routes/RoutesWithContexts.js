@@ -9,7 +9,7 @@ import Staff from "Components/Admin/Staff";
 function RoutesWithContexts() {
   return (
     <CategoriesProvider>
-      <Authenticated />
+      {/* <Authenticated /> */}
       <Routes>
         <Route path="/admin/*" element={<Admin />}>
           <Route path="products" element={<Products />} />

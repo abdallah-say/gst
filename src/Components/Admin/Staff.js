@@ -15,7 +15,7 @@ export default function Staff() {
 
   const [rows, setRows] = useState([]);
   const rowsKeys = rows.length > 0 ? Object.keys(rows[0]) : [];
-  const Tableconfig = ["Name", "Email", "Status", "Edit"];
+  const Tableconfig = ["Name", "Email", "Status", "Action"];
 
   const stopRender = useRef(true);
 
@@ -87,7 +87,7 @@ export default function Staff() {
             <button type="submit">Add Staff</button>
           </form>
         </div>
-        <Table rows={rows} deleteRow={handleDelete} editRow={handleEdit} />
+        <Table rows={rows} deleteRow={handleDelete} editRow={handleEdit} headers={Tableconfig}/>
       </div>
     </React.Fragment>
   );

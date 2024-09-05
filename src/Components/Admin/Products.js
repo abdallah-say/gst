@@ -9,6 +9,7 @@ import "Styles/Desktop/Products.css";
 import { CategoriesContext } from "Contexts/CategoriesContext";
 import handlePostProduct from "Utilities/postProducts";
 import fetchProducts from "Utilities/fetchProducts";
+import { Table } from "Components/Table";
 
 function Products() {
   const { categories } = useContext(CategoriesContext);
@@ -114,7 +115,8 @@ function Products() {
             <input name="Image" type="file" required onChange={handleChanges} />
             <button type="submit">Add Product</button>
           </form>
-          <div className="table-Container">
+          <Table headers={Tableconfig} rows={products} />
+          {/* <div className="table-Container">
             <table className="products-Table">
               <thead>
                 <tr>
@@ -144,7 +146,7 @@ function Products() {
                 ))}
               </tbody>
             </table>
-          </div>
+          </div> */}
         </div>
       </div>
     </React.Fragment>

@@ -1,16 +1,15 @@
 import React from 'react'
 import "Styles/Desktop/Table.css"
-export function Table({ rows, deleteRow, editRow }) {
+export function Table({ rows, deleteRow, editRow, headers }) {
     return (
         <React.Fragment>
             <div className="table-wrapper">
                 <table className="table">
                     <thead>
-                        <tr>
-                            <th>Fullname</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th>-</th>
+                        <tr style={{ gridTemplateColumns: `repeat(${headers.length}, 1fr)` }}>
+                            {headers.map((header, index) => (
+                                <th key={index}>{header}</th>
+                            ))}
                         </tr>
                     </thead>
                     <tbody>
@@ -19,7 +18,7 @@ export function Table({ rows, deleteRow, editRow }) {
                                 row.status.charAt(0).toUpperCase() + row.status.slice(1);
 
                             return (
-                                <tr key={idx}>
+                                <tr key={idx} style={{ gridTemplateColumns: `repeat(${row.length}, 1fr)` }}>
                                     <td>{row.fname}</td>
                                     <td>{row.email}</td>
                                     <td>
@@ -35,7 +34,7 @@ export function Table({ rows, deleteRow, editRow }) {
                                             ><ion-icon name="trash-outline"></ion-icon></button>
                                             <button
                                                 className="edit-btn"
-                                                onClick={() => editRow(idx)}    
+                                                onClick={() => editRow(idx)}
                                             ><ion-icon name="create-outline"></ion-icon></button>
                                         </span>
                                     </td>
