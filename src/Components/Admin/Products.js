@@ -27,14 +27,6 @@ function Products() {
   const [products, setProducts] = useState([]);
 
   const productKeys = products.length > 0 ? Object.keys(products[0]) : [];
-  const TableConfig = [
-    "Title",
-    "Description",
-    "Category",
-    "Price",
-    "Image",
-    "Edit",
-  ];
 
   const stopRender = useRef(true);
 

@@ -8,20 +8,18 @@ import fetchStaff from "Utilities/fetchStaff";
 export default function Staff() {
   const [data, setData] = useState({
     Name: "",
-    email: "",
     password: "",
     admin: false,
   });
 
   const [rows, setRows] = useState([]);
   const rowsKeys = rows.length > 0 ? Object.keys(rows[0]) : [];
-  const TableConfig = ["Name", "Email", "Status", "Action"];
 
   const stopRender = useRef(true);
 
   const fetchStaffList = useCallback(
     async (e) => {
-      e.preventDefault();
+      //   e.preventDefault();
       const config = ["Name", "Email", "Status"];
       await fetchStaff(setRows, config);
     },
@@ -70,19 +68,16 @@ export default function Staff() {
                 onChange={handleDataChange}
               />
               <input
-                name="email"
-                type="email"
-                className="input"
-                placeholder="Email"
-                onChange={handleDataChange}
-              />
-              <input
                 name="password"
                 type="password"
                 className="input"
                 placeholder="Password"
                 onChange={handleDataChange}
               />
+              <input type="radio" />
+              Admin
+              <input type="radio" />
+              Staff
             </div>
             <button type="submit">Add Staff</button>
           </form>
@@ -91,7 +86,7 @@ export default function Staff() {
           rows={rows}
           deleteRow={handleDelete}
           editRow={handleEdit}
-          headers={TableConfig}
+          headers={rowsKeys}
         />
       </div>
     </React.Fragment>
