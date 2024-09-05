@@ -27,7 +27,7 @@ function Products() {
   const [products, setProducts] = useState([]);
 
   const productKeys = products.length > 0 ? Object.keys(products[0]) : [];
-  const Tableconfig = [
+  const TableConfig = [
     "Title",
     "Description",
     "Category",
@@ -115,7 +115,7 @@ function Products() {
             <input name="Image" type="file" required onChange={handleChanges} />
             <button type="submit">Add Product</button>
           </form>
-          <Table headers={Tableconfig} rows={products} />
+          <Table headers={productKeys} rows={products} />
           {/* <div className="table-Container">
             <table className="products-Table">
               <thead>
