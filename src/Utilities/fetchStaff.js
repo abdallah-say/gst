@@ -7,18 +7,17 @@ export default async function fetchStaff(setRows, config) {
       const staff = data.staff;
       const all_staff = staff.map((staff) => {
         const formattedStaff = {};
+        if (config.includes("ID")) formattedStaff.ID = staff.id;
         if (config.includes("Name")) formattedStaff.Name = staff.Name;
         if (config.includes("Email")) formattedStaff.Email = staff.email;
-        if (config.includes("Status")) {
-          if (staff.admin === 1) {
-            formattedStaff.Status = "Admin";
-          } else {
-            formattedStaff.Status = "Staff";
-          }
-        }
+        if (config.includes("Status"))
+          formattedStaff.Status = staff.admin === 1 ? "Admin" : "Staff";
+
         return formattedStaff;
       });
       setRows(all_staff);
     }
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 }

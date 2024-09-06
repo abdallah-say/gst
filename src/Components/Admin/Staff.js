@@ -13,18 +13,15 @@ export default function Staff() {
   });
 
   const [rows, setRows] = useState([]);
-  const rowsKeys = rows.length > 0 ? Object.keys(rows[0]) : [];
+  const rowsKeys =
+    rows.length > 0 ? Object.keys(rows[0]).filter((key) => key !== "ID") : [];
 
   const stopRender = useRef(true);
 
-  const fetchStaffList = useCallback(
-    async (e) => {
-      //   e.preventDefault();
-      const config = ["Name", "Email", "Status"];
-      await fetchStaff(setRows, config);
-    },
-    [setRows]
-  );
+  const fetchStaffList = useCallback(async () => {
+    const config = ["ID", "Name", "Email", "Status"];
+    await fetchStaff(setRows, config);
+  }, [setRows]);
 
   useEffect(() => {
     if (stopRender.current === true) {
@@ -34,7 +31,7 @@ export default function Staff() {
   }, [fetchStaffList]);
 
   const [rowToEdit, setRowToEdit] = useState(null);
-  const handleDelete = () => { };
+  const handleDelete = () => {};
   const handleEdit = (index) => {
     setRowToEdit(data.at(index));
 
@@ -46,15 +43,12 @@ export default function Staff() {
       ...data,
       [e.target.name]: e.target.value,
     });
-
-
   };
 
   const handleAddStaff = async (e) => {
     e.preventDefault(e);
-    console.log(data);
-
     await AddStaff(data);
+    await fetchStaffList();
   };
 
   return (
@@ -80,11 +74,21 @@ export default function Staff() {
               />
               <div className="status-wrapper">
                 <span>
-                  <input type="radio" name="admin" value="0" onChange={handleDataChange} />
+                  <input
+                    type="radio"
+                    name="admin"
+                    value="0"
+                    onChange={handleDataChange}
+                  />
                   Staff
                 </span>
                 <span>
-                  <input type="radio" name="admin" value="1" onChange={handleDataChange} />
+                  <input
+                    type="radio"
+                    name="admin"
+                    value="1"
+                    onChange={handleDataChange}
+                  />
                   Admin
                 </span>
               </div>

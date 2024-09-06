@@ -33,3 +33,23 @@ export async function getStaff() {
   });
   return request;
 }
+
+export async function editStaffPassword(staffId) {
+  const route = process.env.REACT_APP_API_ROUTE;
+  const token = Cookies.get("token");
+
+  const request = await axios.put(`${route}/staff/${staffId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return request;
+}
+
+export async function delStaff(staffId) {
+  const route = process.env.REACT_APP_API_ROUTE;
+  const token = Cookies.get("token");
+
+  const request = await axios.delete(`${route}/staff/${staffId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return request;
+}
