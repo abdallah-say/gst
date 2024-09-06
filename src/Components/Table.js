@@ -7,7 +7,7 @@ export function Table({ rows, deleteRow, editRow, headers }) {
         <table className="table">
           <thead>
             <tr
-              style={{ gridTemplateColumns: `repeat(${headers.length},1fr)` }}
+              style={{ gridTemplateColumns: `repeat(${headers.length +1},1fr)` }}
             >
               {headers.map((key) => (
                 <th key={key}>{key}</th>
@@ -19,7 +19,7 @@ export function Table({ rows, deleteRow, editRow, headers }) {
             {rows.map((product, index) => (
               <tr
                 key={index}
-                style={{ gridTemplateColumns: `repeat(${headers.length},1fr)` }}
+                style={{ gridTemplateColumns: `repeat(${headers.length +1},1fr)` }}
               >
                 {headers.map((key) => (
                   <td key={key}>
@@ -30,6 +30,10 @@ export function Table({ rows, deleteRow, editRow, headers }) {
                       : product[key]}
                   </td>
                 ))}
+                <td className="actions">
+                  <button className="delete-btn" onClick={deleteRow}><ion-icon name="trash-outline"></ion-icon></button>
+                  <button className="edit-btn" onClick={editRow}><ion-icon name="create-outline"></ion-icon></button>
+                </td>
               </tr>
             ))}
           </tbody>

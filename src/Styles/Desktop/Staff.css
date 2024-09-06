@@ -89,3 +89,18 @@
     border: 1px solid #d35400;
     color: #d35400;
 }
+
+
+.status-wrapper{
+    display: flex;
+    justify-content: space-evenly;
+    color: #d35400;
+}
+.status-wrapper span{
+    display: flex;
+    gap: .5rem;
+}
+
+.status-wrapper span input[type=radio]{
+    accent-color: #d35400;
+}

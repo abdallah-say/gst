@@ -9,7 +9,7 @@ export default function Staff() {
   const [data, setData] = useState({
     Name: "",
     password: "",
-    admin: false,
+    admin: 0,
   });
 
   const [rows, setRows] = useState([]);
@@ -34,7 +34,7 @@ export default function Staff() {
   }, [fetchStaffList]);
 
   const [rowToEdit, setRowToEdit] = useState(null);
-  const handleDelete = () => {};
+  const handleDelete = () => { };
   const handleEdit = (index) => {
     setRowToEdit(data.at(index));
 
@@ -46,6 +46,8 @@ export default function Staff() {
       ...data,
       [e.target.name]: e.target.value,
     });
+
+
   };
 
   const handleAddStaff = async (e) => {
@@ -76,10 +78,16 @@ export default function Staff() {
                 placeholder="Password"
                 onChange={handleDataChange}
               />
-              <input type="radio" name="admin" value="staff" />
-              Staff
-              <input type="radio" name="admin" value="admin" />
-              Admin
+              <div className="status-wrapper">
+                <span>
+                  <input type="radio" name="admin" value="0" onChange={handleDataChange} />
+                  Staff
+                </span>
+                <span>
+                  <input type="radio" name="admin" value="1" onChange={handleDataChange} />
+                  Admin
+                </span>
+              </div>
             </div>
             <button type="submit">Add Staff</button>
           </form>
