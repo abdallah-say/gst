@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Table } from "Components/Table";
 import AddStaff from "Utilities/postStaff";
 import fetchStaff from "Utilities/fetchStaff";
+import DelStaff from "Utilities/delStaff";
+import editStaff from "Utilities/editStaff";
 
 export default function Staff() {
   const [data, setData] = useState({
@@ -31,12 +33,36 @@ export default function Staff() {
   }, [fetchStaffList]);
 
   const [rowToEdit, setRowToEdit] = useState(null);
-  const handleDelete = () => {};
-  const handleEdit = (index) => {
-    setRowToEdit(data.at(index));
 
-    prompt(`Current Password: ${rowToEdit.pass}. New Password:`);
+  const handleEdit = async (index) => {
+    const staffToEdit = data.at(index);
+    setRowToEdit(staffToEdit);
+
+    const newPassword = prompt(`Current Password: ${staffToEdit.pass}. Enter new password:`);
+
+    if (newPassword) {
+      try {
+        await editStaff(staffToEdit.id, newPassword);
+      } catch (error) {
+        console.error("Error editing staff password:", error);
+      }
+    }
   };
+
+  const handleDelete = async (e, staffID) => {
+    e.preventDefault();
+    const confirmDelete = window.confirm("Are you sure you want to delete this staff member?");
+
+    if (confirmDelete) {
+      try {
+        await DelStaff(staffID);
+      } catch (err) {
+        console.error("Error deleting staff:", err);
+      }
+    }
+  };
+
+
 
   const handleDataChange = (e) => {
     setData({
